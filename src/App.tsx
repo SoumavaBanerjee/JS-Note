@@ -1,11 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
+import "./app.css";
 
-const app: React.FC = () => {
+const App: React.FC = () => {
+  const [input, setInput] = useState("");
+  const [code, setCode] = useState("");
+
+  const transpile = () => {
+    console.log("transpile");
+  };
+
   return (
-    <div>
-      <h1>Hello</h1>
+    <div className="wrapper">
+      <h1>JS_TRANSPILER</h1>
+      <div className="codespace">
+        <div className="editor">
+          <textarea
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            name="editor"
+            spellCheck="false"
+          ></textarea>
+        </div>
+        <div className="screen"></div>
+      </div>
+      <button onClick={transpile}>Transpile</button>
     </div>
   );
 };
 
-export default app;
+export default App;
