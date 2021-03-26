@@ -37,7 +37,6 @@ textarea {
   resize: horizontal;
   max-width: 600px;
   max-height: 600px;
-  margin-right: var(--gutter-lg);
   -webkit-user-select: auto;
   user-select: auto;
   padding: var(--gutter-sm);
@@ -76,13 +75,18 @@ button:focus {
 @media only screen and (max-width: 861px) {
   .codespace {
     flex-direction: column;
-    width: fit-content;
+    justify-content: center;
+    align-items: center;
   }
 
   textarea {
-    height: 199px;
-    resize: vertical;
-    margin-right: 0;
+    height: 265px;
+    width: 262px;
+  }
+
+  .screen {
+    height: 400px;
+    width: 265px;
   }
 
   .wrapper {

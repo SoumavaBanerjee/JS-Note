@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as esbuild from "esbuild-wasm";
+import { unpkgPathPlugin } from "./plugins/unpkgPathPlugin";
+
 import "./app.css";
 
 const App: React.FC = () => {
@@ -32,16 +34,22 @@ const App: React.FC = () => {
     }
 
     try {
-      const transpiledCode = await esbuild.transform(input, {
-        loader: "jsx",
-        target: ["es2015"],
+      const bunduledCode = await esbuild.build({
+        entryPoints: ["index.js"],
+        bundle: true,
+        write: false,
+        plugins: [unpkgPathPlugin()],
       });
-      if (transpiledCode.warnings.length) {
-        setCode(transpiledCode.warnings.join("\n"));
+
+      console.log(bunduledCode);
+
+      if (bunduledCode.warnings.length) {
+        console.log(bunduledCode);
+        setCode(bunduledCode.warnings.join("\n"));
         return;
       }
 
-      setCode(transpiledCode.code);
+      setCode(bunduledCode.outputFiles[0].text);
     } catch (error) {
       setCode(error.message);
     }
