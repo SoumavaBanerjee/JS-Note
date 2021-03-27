@@ -30,6 +30,7 @@ const App: React.FC = () => {
   const transpile = async () => {
     // If esbuild is not initialised
     if (!esbuild) {
+      setCode("loading...");
       return;
     }
 
@@ -45,8 +46,7 @@ const App: React.FC = () => {
 
       if (bunduledCode.warnings.length) {
         console.log(bunduledCode);
-        setCode(bunduledCode.warnings.join("\n"));
-        return;
+        setCode(bunduledCode.warnings[0].text);
       }
 
       setCode(bunduledCode.outputFiles[0].text);
