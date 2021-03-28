@@ -1,9 +1,15 @@
 import * as esbuild from "esbuild-wasm";
+import localforage from "localforage";
+
 import axios from "axios";
 import {
   onLoadInterface,
   onResolveInterface,
 } from "./unpkgPathPluginInterface";
+
+const packageCache = localforage.createInstance({
+  name: "packageCache",
+});
 
 export const unpkgPathPlugin = () => {
   return {
@@ -43,17 +49,32 @@ export const unpkgPathPlugin = () => {
             contents: `
             import react from "react";
             import lodash from "lodash";
+            import reactDom from "react-dom";
               console.log(file);
+              console.log(lodash);
             `,
           };
         }
 
+        // check cache for file path
+        const cachedPackage = await packageCache.getItem<esbuild.OnLoadResult>(
+          args.path
+        );
+        // if found return
+        if (cachedPackage) return cachedPackage;
+
         const { data, request } = await axios.get(args.path);
-        return {
+
+        const result: esbuild.OnLoadResult = {
           loader: "jsx",
           contents: data,
           resolveDir: new URL("./", request.responseURL).pathname,
         };
+
+        // set new result in cache
+        packageCache.setItem(args.path, result);
+
+        return result;
       });
     },
   };
