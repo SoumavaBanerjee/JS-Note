@@ -53,7 +53,7 @@ const App: React.FC = () => {
           "process.env.NODE_ENV": '"development"', // set development to a string not a variable.
           global: "window",
         },
-        plugins: [unpkgPathPlugin()],
+        plugins: [unpkgPathPlugin(input)],
       });
 
       console.log(bunduledCode);

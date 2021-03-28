@@ -11,7 +11,7 @@ const packageCache = localforage.createInstance({
   name: "packageCache",
 });
 
-export const unpkgPathPlugin = () => {
+export const unpkgPathPlugin = (inputString: string) => {
   return {
     name: "unpkg-path-plugin",
     setup(build: esbuild.PluginBuild) {
@@ -46,13 +46,7 @@ export const unpkgPathPlugin = () => {
         if (args.path === "index.js") {
           return {
             loader: "jsx",
-            contents: `
-            import react from "react";
-            import lodash from "lodash";
-            import reactDom from "react-dom";
-              console.log(file);
-              console.log(lodash);
-            `,
+            contents: inputString,
           };
         }
 
