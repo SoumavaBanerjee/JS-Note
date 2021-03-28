@@ -16,23 +16,22 @@ const App: React.FC = () => {
    *
    */
 
+  // set worker to true in final version.
   const startService = async () => {
     await esbuild.initialize({
       wasmURL: "/esbuild.wasm",
+      worker: false,
     });
   };
 
   useEffect(() => {
     // start esbuild upon start.
     startService();
+    console.log(esbuild);
   }, []);
 
   const transpile = async () => {
     // If esbuild is not initialised
-    if (!esbuild) {
-      setCode("loading...");
-      return;
-    }
 
     try {
       /**
