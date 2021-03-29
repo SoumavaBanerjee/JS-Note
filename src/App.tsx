@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as esbuild from "esbuild-wasm";
-import { unpkgPathPlugin } from "./plugins/unpkgPathPlugin";
+import * as plugins from "./plugins/index";
 
 import "./app.css";
 
@@ -52,7 +52,10 @@ const App: React.FC = () => {
           "process.env.NODE_ENV": '"development"', // set development to a string not a variable.
           global: "window",
         },
-        plugins: [unpkgPathPlugin(input)],
+        plugins: [
+          plugins.unpkgPathPlugin(),
+          plugins.unpkgFetchPackagePlugin(input),
+        ],
       });
 
       console.log(bunduledCode);
