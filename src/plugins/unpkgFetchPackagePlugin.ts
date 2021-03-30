@@ -19,12 +19,15 @@ export const unpkgFetchPackagePlugin = (inputString: string) => {
         };
       });
 
-      build.onLoad({ filter: /.css$/ }, async (args: onLoadInterface) => {
+      // caching layer
+      build.onLoad({ filter: /.*/ }, async (args: onLoadInterface) => {
         const cachedPackage = await packageCache.getItem<esbuild.OnLoadResult>(
           args.path
         );
         if (cachedPackage) return cachedPackage;
+      });
 
+      build.onLoad({ filter: /.css$/ }, async (args: onLoadInterface) => {
         const { data, request } = await axios.get(args.path);
         console.log(args.path);
 
@@ -54,12 +57,6 @@ export const unpkgFetchPackagePlugin = (inputString: string) => {
       });
 
       build.onLoad({ filter: /.*/ }, async (args: onLoadInterface) => {
-        // check cache for file path
-        const cachedPackage = await packageCache.getItem<esbuild.OnLoadResult>(
-          args.path
-        );
-        if (cachedPackage) return cachedPackage;
-
         const { data, request } = await axios.get(args.path);
         console.log(args.path);
 
