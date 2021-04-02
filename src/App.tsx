@@ -7,6 +7,9 @@ import "./app.css";
 const App: React.FC = () => {
   const [input, setInput] = useState("");
   const [code, setCode] = useState("");
+  const executableScript = `<script>
+  ${code}
+  </script>`;
 
   /**
    *In the old version, .startService() returned a promise that resolved to a service object.
@@ -82,6 +85,13 @@ const App: React.FC = () => {
             name="editor"
             spellCheck="false"
           ></textarea>
+          <iframe
+            src="/iframes.html"
+            sandbox="allow-scripts"
+            srcDoc={executableScript}
+            style={{ color: "white" }}
+            title="test"
+          ></iframe>
         </div>
         {/* <div className="screen" contentEditable ></div> */}
         <textarea

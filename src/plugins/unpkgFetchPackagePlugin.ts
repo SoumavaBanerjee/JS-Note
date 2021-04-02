@@ -2,7 +2,7 @@ import * as esbuild from "esbuild-wasm";
 import localforage from "localforage";
 
 import axios from "axios";
-import { onLoadInterface } from "../interfaces/unpkgPathPluginInterface";
+import { onLoadInterface } from "../interfaces/unpkgPluginInterface";
 
 const packageCache = localforage.createInstance({
   name: "packageCache",

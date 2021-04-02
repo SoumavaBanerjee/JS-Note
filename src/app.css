@@ -18,6 +18,11 @@
   background-color: #1a1818;
 }
 
+.editor {
+  display: flex;
+  flex-direction: column;
+}
+
 .codespace {
   display: flex;
   flex-direction: row;
