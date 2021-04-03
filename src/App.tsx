@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import * as esbuild from "esbuild-wasm";
 import * as plugins from "./plugins/index";
 
@@ -7,9 +7,19 @@ import "./app.css";
 const App: React.FC = () => {
   const [input, setInput] = useState("");
   const [code, setCode] = useState("");
-  const executableScript = `<script>
-  ${code}
-  </script>`;
+  const iframeRef = useRef<any>();
+  const executableScript = `<html>
+  <head></head>
+  <body>
+  <div id = "root"></div>
+  <script>
+  window.addEventListener('message', () => {
+    eval(event.data);
+  }, false);
+  </script>
+  </body>
+  
+  </html>`;
 
   /**
    *In the old version, .startService() returned a promise that resolved to a service object.
@@ -65,10 +75,13 @@ const App: React.FC = () => {
 
       if (bunduledCode.warnings.length) {
         console.log(bunduledCode);
-        setCode(bunduledCode.warnings[0].text);
       }
 
-      setCode(bunduledCode.outputFiles[0].text);
+      // setCode(bunduledCode.outputFiles[0].text);
+      iframeRef.current.contentWindow.postMessage(
+        bunduledCode.outputFiles[0].text,
+        "*"
+      );
     } catch (error) {
       setCode(error.message);
     }
@@ -87,9 +100,10 @@ const App: React.FC = () => {
           ></textarea>
           <iframe
             src="/iframes.html"
+            ref={iframeRef}
             sandbox="allow-scripts"
             srcDoc={executableScript}
-            style={{ color: "white" }}
+            style={{ background: "white" }}
             title="test"
           ></iframe>
         </div>
