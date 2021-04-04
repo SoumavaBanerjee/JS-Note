@@ -1,25 +1,41 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as esbuild from "esbuild-wasm";
 import * as plugins from "./plugins/index";
+import Editor from "./components/Editor/Editor";
 
-import "./app.css";
+// import "./app.css";
 
 const App: React.FC = () => {
   const [input, setInput] = useState("");
-  const [code, setCode] = useState("");
   const iframeRef = useRef<any>();
-  const executableScript = `<html>
-  <head></head>
-  <body>
-  <div id = "root"></div>
-  <script>
-  window.addEventListener('message', () => {
-    eval(event.data);
-  }, false);
-  </script>
-  </body>
-  
-  </html>`;
+  const iframeHtmlDoc = `
+  <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div id="root"></div>
+    <script>
+        window.addEventListener('message', (event) => {
+            try {
+                eval(event.data);
+                console.log(event.data);
+            } catch (error) {
+                const root = document.querySelector("#root");
+                root.innerHTML = '<div style = "color: red"><h4>Runtime Error:</h4>' + error + '</div>'
+                console.error(error);
+            }
+        }, false);
+    </script>
+</body>
+
+</html>
+  `;
 
   /**
    *In the old version, .startService() returned a promise that resolved to a service object.
@@ -29,7 +45,6 @@ const App: React.FC = () => {
    *
    */
 
-  // set worker to true in final version.
   const startService = async () => {
     await esbuild.initialize({
       wasmURL: "/esbuild.wasm",
@@ -40,51 +55,41 @@ const App: React.FC = () => {
   useEffect(() => {
     // start esbuild upon start.
     startService();
-    console.log(esbuild);
   }, []);
 
+  // Possible soln;
+
+  // useEffect(() => {
+  //   iframeRef.current.srcdoc = iframeHtmlDoc;
+  // }, [input, iframeHtmlDoc]);
+
   const transpile = async () => {
-    // If esbuild is not initialised
+    // refresh iframe at start. Doesn't work. Don't know why.
+    // iframeRef.current.srcdoc = iframeHtmlDoc;
 
-    try {
-      /**
-       * @EntryPoint entry file to start bundling,
-       * @bundle bundling should occur or not
-       * @write return the file as an in-memory buffer
-       * @color colored warnings
-       * @define Define environment variable value
-       * @plugin Define all custom written plugins
-       */
+    const bunduledCode = await esbuild.build({
+      entryPoints: ["index.js"],
+      bundle: true,
+      write: false,
+      color: true,
+      define: {
+        "process.env.NODE_ENV": '"development"', // set development to a string not a variable.
+        global: "window",
+      },
+      plugins: [
+        plugins.unpkgPathPlugin(),
+        plugins.unpkgFetchPackagePlugin(input),
+      ],
+    });
 
-      const bunduledCode = await esbuild.build({
-        entryPoints: ["index.js"],
-        bundle: true,
-        write: false,
-        color: true,
-        define: {
-          "process.env.NODE_ENV": '"development"', // set development to a string not a variable.
-          global: "window",
-        },
-        plugins: [
-          plugins.unpkgPathPlugin(),
-          plugins.unpkgFetchPackagePlugin(input),
-        ],
-      });
+    // setCode(bunduledCode.outputFiles[0].text);
 
-      console.log(bunduledCode);
+    iframeRef.current.contentWindow.postMessage(
+      bunduledCode.outputFiles[0].text,
+      "*"
+    );
 
-      if (bunduledCode.warnings.length) {
-        console.log(bunduledCode);
-      }
-
-      // setCode(bunduledCode.outputFiles[0].text);
-      iframeRef.current.contentWindow.postMessage(
-        bunduledCode.outputFiles[0].text,
-        "*"
-      );
-    } catch (error) {
-      setCode(error.message);
-    }
+    console.log("bundling completed");
   };
 
   return (
@@ -98,25 +103,24 @@ const App: React.FC = () => {
             name="editor"
             spellCheck="false"
           ></textarea>
-          <iframe
-            src="/iframes.html"
-            ref={iframeRef}
-            sandbox="allow-scripts"
-            srcDoc={executableScript}
-            style={{ background: "white" }}
-            title="test"
-          ></iframe>
         </div>
-        {/* <div className="screen" contentEditable ></div> */}
-        <textarea
-          className="screen"
-          value={code}
-          spellCheck="false"
-          draggable="false"
-          readOnly
-        ></textarea>
+        <iframe
+          ref={iframeRef}
+          sandbox="allow-scripts"
+          srcDoc={iframeHtmlDoc}
+          style={{ background: "white" }}
+          title="test"
+        />
       </div>
-      <button onClick={transpile}>Transpile</button>
+      <button
+        onClick={() => {
+          // console.log((iframeRef.current.srcdoc = executableScript));
+          transpile();
+        }}
+      >
+        Transpile
+      </button>
+      <Editor />
     </div>
   );
 };
