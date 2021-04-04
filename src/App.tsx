@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import * as esbuild from "esbuild-wasm";
 import * as plugins from "./plugins/index";
 import Editor from "./components/Editor/Editor";
@@ -7,6 +7,7 @@ import Editor from "./components/Editor/Editor";
 
 const App: React.FC = () => {
   const [input, setInput] = useState("");
+<<<<<<< HEAD
   const iframeRef = useRef<any>();
   const iframeHtmlDoc = `
   <!DOCTYPE html>
@@ -36,6 +37,12 @@ const App: React.FC = () => {
 
 </html>
   `;
+=======
+  const [code, setCode] = useState("");
+  const executableScript = `<script>
+  ${code}
+  </script>`;
+>>>>>>> parent of 0f541cf... in-browser direct code execution works!
 
   /**
    *In the old version, .startService() returned a promise that resolved to a service object.
@@ -64,6 +71,7 @@ const App: React.FC = () => {
   // }, [input, iframeHtmlDoc]);
 
   const transpile = async () => {
+<<<<<<< HEAD
     // refresh iframe at start. Doesn't work. Don't know why.
     // iframeRef.current.srcdoc = iframeHtmlDoc;
 
@@ -90,6 +98,46 @@ const App: React.FC = () => {
     );
 
     console.log("bundling completed");
+=======
+    // If esbuild is not initialised
+
+    try {
+      /**
+       * @EntryPoint entry file to start bundling,
+       * @bundle bundling should occur or not
+       * @write return the file as an in-memory buffer
+       * @color colored warnings
+       * @define Define environment variable value
+       * @plugin Define all custom written plugins
+       */
+
+      const bunduledCode = await esbuild.build({
+        entryPoints: ["index.js"],
+        bundle: true,
+        write: false,
+        color: true,
+        define: {
+          "process.env.NODE_ENV": '"development"', // set development to a string not a variable.
+          global: "window",
+        },
+        plugins: [
+          plugins.unpkgPathPlugin(),
+          plugins.unpkgFetchPackagePlugin(input),
+        ],
+      });
+
+      console.log(bunduledCode);
+
+      if (bunduledCode.warnings.length) {
+        console.log(bunduledCode);
+        setCode(bunduledCode.warnings[0].text);
+      }
+
+      setCode(bunduledCode.outputFiles[0].text);
+    } catch (error) {
+      setCode(error.message);
+    }
+>>>>>>> parent of 0f541cf... in-browser direct code execution works!
   };
 
   return (
@@ -103,6 +151,16 @@ const App: React.FC = () => {
             name="editor"
             spellCheck="false"
           ></textarea>
+<<<<<<< HEAD
+=======
+          <iframe
+            src="/iframes.html"
+            sandbox="allow-scripts"
+            srcDoc={executableScript}
+            style={{ color: "white" }}
+            title="test"
+          ></iframe>
+>>>>>>> parent of 0f541cf... in-browser direct code execution works!
         </div>
         <iframe
           ref={iframeRef}
