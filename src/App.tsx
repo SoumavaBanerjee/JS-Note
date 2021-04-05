@@ -34,7 +34,7 @@ const App: React.FC = () => {
   const startService = async () => {
     await esbuild.initialize({
       wasmURL: "/esbuild.wasm",
-      worker: false,
+      worker: true,
     });
   };
 
@@ -90,7 +90,10 @@ const App: React.FC = () => {
 
   return (
     <div className="wrapper">
-      <CodeEditor initialValue="/*Happy Coding! :) */" />
+      <CodeEditor
+        initialValue="/*Happy Coding! :) */"
+        onChange={(value) => setInput(value)}
+      />
       <h1>JS_TRANSPILER</h1>
       <div className="codespace">
         <div className="editor">

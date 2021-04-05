@@ -2,9 +2,14 @@ import MonacoEditor from "@monaco-editor/react";
 import { EditorPropsInterface } from "../../interfaces/index";
 import React from "react";
 
-const Editor: React.FC<EditorPropsInterface> = ({ initialValue }) => {
+const Editor: React.FC<EditorPropsInterface> = ({ onChange, initialValue }) => {
+  const onEditorDidMount = (getCurrentValue: any) => {
+    console.log(getCurrentValue);
+  };
+
   return (
     <MonacoEditor
+      onMount={onEditorDidMount}
       value={initialValue}
       height="30vh"
       width="60vh"
