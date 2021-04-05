@@ -1,5 +1,5 @@
 import * as esbuild from "esbuild-wasm";
-import { onResolveInterface } from "../interfaces/unpkgPluginInterface";
+import { onResolveInterface } from "../interfaces/index";
 
 export const unpkgPathPlugin = () => {
   return {

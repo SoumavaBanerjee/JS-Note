@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as esbuild from "esbuild-wasm";
 import * as plugins from "./plugins/index";
+import CodeEditor from "./components/CodeEditor/Editor";
 
-import "./app.css";
+// import "./app.css";
 
 const App: React.FC = () => {
   const [input, setInput] = useState("");
@@ -89,6 +90,7 @@ const App: React.FC = () => {
 
   return (
     <div className="wrapper">
+      <CodeEditor initialValue="/*Happy Coding! :) */" />
       <h1>JS_TRANSPILER</h1>
       <div className="codespace">
         <div className="editor">
@@ -115,6 +117,7 @@ const App: React.FC = () => {
           draggable="false"
           readOnly
         ></textarea>
+        {/* <CodeEditor /> */}
       </div>
       <button onClick={transpile}>Transpile</button>
     </div>
