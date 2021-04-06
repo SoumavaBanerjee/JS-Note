@@ -3,12 +3,13 @@ import * as esbuild from "esbuild-wasm";
 import * as plugins from "./plugins/index";
 import CodeEditor from "./components/CodeEditor/Editor";
 
-// import "./app.css";
+import { Paper, Container, Grid, Button } from "@material-ui/core";
+import makeStyles from "./styles";
 
 const App: React.FC = () => {
   const [input, setInput] = useState("");
-  const [code, setCode] = useState("");
   const iframeRef = useRef<any>();
+  const classes = makeStyles();
   const executableScript = `<html>
   <head></head>
   <body>
@@ -84,46 +85,31 @@ const App: React.FC = () => {
         "*"
       );
     } catch (error) {
-      setCode(error.message);
+      console.error(error);
     }
   };
 
   return (
-    <div className="wrapper">
-      <CodeEditor
-        initialValue="/*Happy Coding! :) */"
-        onChange={(value) => setInput(value)}
-      />
-      <h1>JS_TRANSPILER</h1>
-      <div className="codespace">
-        <div className="editor">
-          <textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            name="editor"
-            spellCheck="false"
-          ></textarea>
-          <iframe
-            src="/iframes.html"
-            ref={iframeRef}
-            sandbox="allow-scripts"
-            srcDoc={executableScript}
-            style={{ background: "white" }}
-            title="test"
-          ></iframe>
-        </div>
-        {/* <div className="screen" contentEditable ></div> */}
-        <textarea
-          className="screen"
-          value={code}
-          spellCheck="false"
-          draggable="false"
-          readOnly
-        ></textarea>
-        {/* <CodeEditor /> */}
-      </div>
-      <button onClick={transpile}>Transpile</button>
-    </div>
+    <Container maxWidth="xl">
+      <Paper className={classes.wrapper} elevation={2}>
+        <CodeEditor
+          initialValue="/*Happy Coding! :) */"
+          onChange={(value) => setInput(value)}
+        />
+        <iframe
+          src="/iframes.html"
+          ref={iframeRef}
+          sandbox="allow-scripts"
+          srcDoc={executableScript}
+          style={{ background: "white" }}
+          title="test"
+        />
+      </Paper>
+
+      <Button color="primary" onClick={transpile} variant="outlined">
+        Transpile
+      </Button>
+    </Container>
   );
 };
 
