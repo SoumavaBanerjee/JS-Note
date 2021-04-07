@@ -47,7 +47,6 @@ const App: React.FC = () => {
         />
         <PreviewWindow code={code} />
       </Paper>
-
       <Button color="primary" onClick={transpile} variant="outlined">
         Transpile
       </Button>

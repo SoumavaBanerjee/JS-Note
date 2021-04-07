@@ -16,13 +16,13 @@ const executableScript = `<html>
   }, false);
   </script>
   </body>
-  
   </html>`;
 
 const PreviewWindow: React.FC<PreviewWindowInterface> = ({ code }) => {
   const iframeRef = useRef<any>();
 
   //   Upon change in code, refresh window and execute the script
+
   useEffect(() => {
     //   Not working currently
     // iframeRef.current.srcdoc = executableScript;
