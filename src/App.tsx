@@ -1,31 +1,16 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import * as esbuild from "esbuild-wasm";
-import * as plugins from "./plugins/index";
+import bundle from "./Bundler/index";
 import CodeEditor from "./components/CodeEditor/Editor";
+import PreviewWindow from "./components/PreviewWindow/PreviewWindow";
 
 import { Paper, Container, Grid, Button } from "@material-ui/core";
 import makeStyles from "./styles";
 
 const App: React.FC = () => {
   const [input, setInput] = useState("");
-  const iframeRef = useRef<any>();
+  const [code, setCode] = useState("");
   const classes = makeStyles();
-  const executableScript = `<html>
-  <head></head>
-  <body>
-  <div id = "root"></div>
-  <script>
-  window.addEventListener('message', () => {
-    try{
-      eval(event.data);
-    }catch(error){
-      document.querySelector("#root").innerHTML = '<div style="color: red"><h1>Runtime Error:</h1> <p>' + error + '</p></div>'
-    }
-  }, false);
-  </script>
-  </body>
-  
-  </html>`;
 
   /**
    *In the old version, .startService() returned a promise that resolved to a service object.
@@ -35,63 +20,22 @@ const App: React.FC = () => {
    *
    */
 
-  // set worker to true in final version.
+  // Start es-build service once
   const startService = async () => {
     await esbuild.initialize({
       wasmURL: "/esbuild.wasm",
       worker: true,
     });
   };
-
   useEffect(() => {
-    // start esbuild upon start.
     startService();
-    console.log(esbuild);
   }, []);
 
   const transpile = async () => {
-    // Refresh iframe before every transpile
-    iframeRef.current.srcdoc = executableScript;
+    const bundledCode = await bundle(input);
 
-    try {
-      /**
-       * @EntryPoint entry file to start bundling,
-       * @bundle bundling should occur or not
-       * @write return the file as an in-memory buffer
-       * @color colored warnings
-       * @define Define environment variable value
-       * @plugin Define all custom written plugins
-       */
-
-      const bunduledCode = await esbuild.build({
-        entryPoints: ["index.js"],
-        bundle: true,
-        write: false,
-        color: true,
-        define: {
-          "process.env.NODE_ENV": '"development"', // set development to a string not a variable.
-          global: "window",
-        },
-        plugins: [
-          plugins.unpkgPathPlugin(),
-          plugins.unpkgFetchPackagePlugin(input),
-        ],
-      });
-
-      console.log(bunduledCode);
-
-      if (bunduledCode.warnings.length) {
-        console.log(bunduledCode);
-      }
-
-      // setCode(bunduledCode.outputFiles[0].text);
-      iframeRef.current.contentWindow.postMessage(
-        bunduledCode.outputFiles[0].text,
-        "*"
-      );
-    } catch (error) {
-      console.error(error);
-    }
+    if (!bundledCode) return;
+    setCode(bundledCode);
   };
 
   return (
@@ -101,14 +45,7 @@ const App: React.FC = () => {
           initialValue="/*Happy Coding! :) */"
           onChange={(value) => setInput(value)}
         />
-        <iframe
-          src="/iframes.html"
-          ref={iframeRef}
-          sandbox="allow-scripts"
-          srcDoc={executableScript}
-          style={{ background: "white" }}
-          title="test"
-        />
+        <PreviewWindow code={code} />
       </Paper>
 
       <Button color="primary" onClick={transpile} variant="outlined">
