@@ -25,7 +25,7 @@ const PreviewWindow: React.FC<PreviewWindowInterface> = ({ code }) => {
 
   useEffect(() => {
     //   Not working currently
-    // iframeRef.current.srcdoc = executableScript;
+    iframeRef.current.srcdoc = executableScript;
     iframeRef.current.contentWindow.postMessage(code, "*");
   }, [code]);
   return (
