@@ -1,15 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import * as esbuild from "esbuild-wasm";
-import bundle from "./Bundler/index";
-import CodeEditor from "./components/CodeEditor/Editor";
-import PreviewWindow from "./components/PreviewWindow/PreviewWindow";
-
-import { Paper, Container, Grid, Button } from "@material-ui/core";
+import Cell from "./components/CodeCell/Cell";
 import makeStyles from "./styles";
 
 const App: React.FC = () => {
-  const [input, setInput] = useState("");
-  const [code, setCode] = useState("");
   const classes = makeStyles();
 
   /**
@@ -31,26 +25,10 @@ const App: React.FC = () => {
     startService();
   }, []);
 
-  const transpile = async () => {
-    const bundledCode = await bundle(input);
-
-    if (!bundledCode) return;
-    setCode(bundledCode);
-  };
-
   return (
-    <Container maxWidth="xl">
-      <Paper className={classes.wrapper} elevation={2}>
-        <CodeEditor
-          initialValue="/*Happy Coding! :) */"
-          onChange={(value) => setInput(value)}
-        />
-        <PreviewWindow code={code} />
-      </Paper>
-      <Button color="primary" onClick={transpile} variant="outlined">
-        Transpile
-      </Button>
-    </Container>
+    <div>
+      <Cell />
+    </div>
   );
 };
 
