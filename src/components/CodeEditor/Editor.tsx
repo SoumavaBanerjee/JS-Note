@@ -20,7 +20,6 @@ const Editor: React.FC<EditorPropsInterface> = ({ onChange, initialValue }) => {
     editor: monaco.editor.IStandaloneCodeEditor,
     monacoInstance: Monaco
   ) => {
-    // console.log(editor.getValue());
     monacoEditorRef.current = editor;
     editor.onDidChangeModelContent(() => {
       onChange(editor.getValue());

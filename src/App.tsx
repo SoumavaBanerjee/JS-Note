@@ -16,7 +16,11 @@ const App: React.FC = () => {
   <div id = "root"></div>
   <script>
   window.addEventListener('message', () => {
-    eval(event.data);
+    try{
+      eval(event.data);
+    }catch(error){
+      document.querySelector("#root").innerHTML = '<div style="color: red"><h1>Runtime Error:</h1> <p>' + error + '</p></div>'
+    }
   }, false);
   </script>
   </body>
@@ -46,7 +50,8 @@ const App: React.FC = () => {
   }, []);
 
   const transpile = async () => {
-    // If esbuild is not initialised
+    // Refresh iframe before every transpile
+    iframeRef.current.srcdoc = executableScript;
 
     try {
       /**
