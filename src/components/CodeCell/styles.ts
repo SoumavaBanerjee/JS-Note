@@ -4,7 +4,6 @@ export default makeStyles((theme) => ({
   wrapper: {
     display: "flex",
     flexDirection: "row",
-    width: "100%",
     height: "100%",
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),

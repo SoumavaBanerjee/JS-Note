@@ -1,5 +1,5 @@
 import React from "react";
-import { ResizableBox } from "react-resizable";
+import { ResizableBox, ResizableBoxProps } from "react-resizable";
 import { ResizablePropsInterface } from "../../interfaces/index";
 
 import "./styles.css";

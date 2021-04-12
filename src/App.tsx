@@ -27,11 +27,7 @@ const App: React.FC = () => {
     startService();
   }, []);
 
-  return (
-    <Container maxWidth="xl">
-      <Cell />
-    </Container>
-  );
+  return <Cell />;
 };
 
 export default App;
