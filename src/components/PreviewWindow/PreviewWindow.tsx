@@ -25,7 +25,7 @@ const PreviewWindow: React.FC<PreviewWindowInterface> = ({ code }) => {
 
   useEffect(() => {
     //   Not working currently
-    iframeRef.current.srcdoc = executableScript;
+    // iframeRef.current.srcdoc = executableScript;
     iframeRef.current.contentWindow.postMessage(code, "*");
   }, [code]);
   return (
@@ -33,7 +33,7 @@ const PreviewWindow: React.FC<PreviewWindowInterface> = ({ code }) => {
       ref={iframeRef}
       sandbox="allow-scripts"
       srcDoc={executableScript}
-      style={{ background: "white" }}
+      style={{ background: "white", width: "100%" }}
       title="test"
     />
   );
