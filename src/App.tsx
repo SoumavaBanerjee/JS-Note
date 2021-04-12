@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import * as esbuild from "esbuild-wasm";
 import Cell from "./components/CodeCell/Cell";
+
+import { Container } from "@material-ui/core";
 import makeStyles from "./styles";
 
 const App: React.FC = () => {
@@ -26,9 +28,9 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div>
+    <Container maxWidth="xl">
       <Cell />
-    </div>
+    </Container>
   );
 };
 

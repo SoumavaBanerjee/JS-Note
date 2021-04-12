@@ -5,7 +5,7 @@ import React, { useRef } from "react";
 import prettier from "prettier";
 import parser from "prettier/parser-babel";
 
-import { Button } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 import makeStyles from "./styles";
 
 const Editor: React.FC<EditorPropsInterface> = ({ onChange, initialValue }) => {
@@ -44,7 +44,7 @@ const Editor: React.FC<EditorPropsInterface> = ({ onChange, initialValue }) => {
   };
 
   return (
-    <div className={classes.editorWrapper}>
+    <Grid container className={classes.editorWrapper}>
       <Button
         className={classes.editorFormatBtn}
         color="primary"
@@ -57,8 +57,8 @@ const Editor: React.FC<EditorPropsInterface> = ({ onChange, initialValue }) => {
       <MonacoEditor
         onMount={onEditorDidMount}
         value={initialValue}
-        height="30vh"
         width="100%"
+        height="100%"
         defaultLanguage="javascript"
         theme="vs-dark"
         options={{
@@ -73,7 +73,7 @@ const Editor: React.FC<EditorPropsInterface> = ({ onChange, initialValue }) => {
           automaticLayout: true,
         }}
       />
-    </div>
+    </Grid>
   );
 };
 

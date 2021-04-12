@@ -33,7 +33,7 @@ const PreviewWindow: React.FC<PreviewWindowInterface> = ({ code }) => {
       ref={iframeRef}
       sandbox="allow-scripts"
       srcDoc={executableScript}
-      style={{ background: "white", width: "100%" }}
+      style={{ background: "white", width: "100%", height: "100%" }}
       title="test"
     />
   );

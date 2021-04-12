@@ -9,7 +9,7 @@ const ResizableCell: React.FC<ResizablePropsInterface> = ({
   direction,
 }) => {
   return (
-    <ResizableBox height={500} width={800} resizeHandles={["s"]}>
+    <ResizableBox height={400} width={Infinity} resizeHandles={["s"]}>
       {children}
     </ResizableBox>
   );
