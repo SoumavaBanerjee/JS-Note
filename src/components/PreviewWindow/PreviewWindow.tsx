@@ -6,12 +6,20 @@ const executableScript = `<html>
   <body>
   <div id="root"></div>
   <script>
+  const handleError = (error) => {
+    document.querySelector("#root").innerHTML = '<div style="color: red"><h1>Runtime Error:</h1> <p>' + error + '</p></div>'
+  }
+
+  window.addEventListener('error', (event) => {
+    handleError(event.error);
+  })
+
   window.addEventListener('message', () => {
     try{
       eval(event.data);
       console.log(event.data);
     }catch(error){
-      document.querySelector("#root").innerHTML = '<div style="color: red"><h1>Runtime Error:</h1> <p>' + error + '</p></div>'
+      handleError(error);
     }
   }, false);
   </script>
@@ -22,11 +30,13 @@ const PreviewWindow: React.FC<PreviewWindowInterface> = ({ code }) => {
   const iframeRef = useRef<any>();
 
   //   Upon change in code, refresh window and execute the script
+  // 50ms delay for iframe to load up
 
   useEffect(() => {
-    //   Not working currently
-    // iframeRef.current.srcdoc = executableScript;
-    iframeRef.current.contentWindow.postMessage(code, "*");
+    iframeRef.current.srcdoc = executableScript;
+    setTimeout(() => {
+      iframeRef.current.contentWindow.postMessage(code, "*");
+    }, 25);
   }, [code]);
   return (
     <iframe

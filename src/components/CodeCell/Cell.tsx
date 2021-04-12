@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import bundle from "../../Bundler/index";
 import CodeEditor from "../CodeEditor/Editor";
 import PreviewWindow from "../PreviewWindow/PreviewWindow";
 import ResizableCell from "../ResizableCell/ResizableCell";
 
-import { Paper, Button } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 import makeStyles from "./styles";
 
 const Cell: React.FC = () => {
@@ -12,12 +12,18 @@ const Cell: React.FC = () => {
   const [code, setCode] = useState("");
   const classes = makeStyles();
 
-  const transpile = async () => {
-    const bundledCode = await bundle(input);
+  // Debouncing code execution upon delay of 1s
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      const bundledCode = await bundle(input);
+      if (!bundledCode) return;
+      setCode(bundledCode);
+    }, 1500);
 
-    if (!bundledCode) return;
-    setCode(bundledCode);
-  };
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [input]);
 
   return (
     <ResizableCell direction="verticle">

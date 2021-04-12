@@ -1,5 +1,5 @@
 import React from "react";
-import { ResizableBox, ResizableBoxProps } from "react-resizable";
+import { ResizableBox } from "react-resizable";
 import { ResizablePropsInterface } from "../../interfaces/index";
 
 import "./styles.css";
@@ -9,7 +9,13 @@ const ResizableCell: React.FC<ResizablePropsInterface> = ({
   direction,
 }) => {
   return (
-    <ResizableBox height={400} width={Infinity} resizeHandles={["s"]}>
+    <ResizableBox
+      minConstraints={[Infinity, 24]}
+      maxConstraints={[Infinity, window.innerHeight * 0.9]}
+      height={400}
+      width={Infinity}
+      resizeHandles={["s"]}
+    >
       {children}
     </ResizableBox>
   );
