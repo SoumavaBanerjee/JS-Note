@@ -4,6 +4,8 @@ export default makeStyles((theme) => ({
   wrapper: {
     display: "flex",
     flexDirection: "row",
+    flexGrow: 1,
+    flexBasis: 0,
     height: "100%",
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),

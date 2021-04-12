@@ -11,6 +11,7 @@ const executableScript = `<html>
   }
 
   window.addEventListener('error', (event) => {
+    event.preventDefault();
     handleError(event.error);
   })
 
@@ -26,7 +27,10 @@ const executableScript = `<html>
   </body>
   </html>`;
 
-const PreviewWindow: React.FC<PreviewWindowInterface> = ({ code }) => {
+const PreviewWindow: React.FC<PreviewWindowInterface> = ({
+  code,
+  errorMessage,
+}) => {
   const iframeRef = useRef<any>();
 
   //   Upon change in code, refresh window and execute the script
@@ -38,14 +42,24 @@ const PreviewWindow: React.FC<PreviewWindowInterface> = ({ code }) => {
       iframeRef.current.contentWindow.postMessage(code, "*");
     }, 25);
   }, [code]);
+
+  console.error(errorMessage);
+
   return (
-    <iframe
-      ref={iframeRef}
-      sandbox="allow-scripts"
-      srcDoc={executableScript}
-      style={{ background: "white", width: "100%", height: "100%" }}
-      title="test"
-    />
+    <>
+      <iframe
+        ref={iframeRef}
+        sandbox="allow-scripts"
+        srcDoc={executableScript}
+        style={{
+          position: "relative",
+          background: "white",
+          width: "100%",
+          height: "100%",
+        }}
+        title="test"
+      />
+    </>
   );
 };
 

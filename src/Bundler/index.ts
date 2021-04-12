@@ -28,9 +28,9 @@ const bundle = async (rawCode: string) => {
       ],
     });
     console.log(bunduledCode);
-    return bunduledCode.outputFiles[0].text;
-  } catch (error) {
-    console.error(error);
+    return { code: bunduledCode.outputFiles[0].text, error: "" };
+  } catch (err) {
+    return { code: "", error: err.message };
   }
 };
 

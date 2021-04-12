@@ -10,14 +10,15 @@ import makeStyles from "./styles";
 const Cell: React.FC = () => {
   const [input, setInput] = useState("");
   const [code, setCode] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const classes = makeStyles();
 
   // Debouncing code execution upon delay of 1s
   useEffect(() => {
     const timer = setTimeout(async () => {
       const bundledCode = await bundle(input);
-      if (!bundledCode) return;
-      setCode(bundledCode);
+      setCode(bundledCode.code);
+      setErrorMessage(bundledCode.error);
     }, 1500);
 
     return () => {
@@ -32,7 +33,7 @@ const Cell: React.FC = () => {
           initialValue="/*Happy Coding! :) */"
           onChange={(value) => setInput(value)}
         />
-        <PreviewWindow code={code} />
+        <PreviewWindow errorMessage={errorMessage} code={code} />
       </Paper>
     </ResizableCell>
   );

@@ -10,6 +10,6 @@ export default makeStyles((theme) => ({
   editorWrapper: {
     position: "relative",
     height: "100%",
-    width: "calc(100% - 10px)",
+    width: "100%",
   },
 }));
