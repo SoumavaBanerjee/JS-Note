@@ -1,6 +1,6 @@
 .react-resizable-handle {
   display: block;
-  background-color: #303030;
+  background-color: hsl(0, 0%, 15%);
   background-repeat: no-repeat;
   background-position: 50%;
 }

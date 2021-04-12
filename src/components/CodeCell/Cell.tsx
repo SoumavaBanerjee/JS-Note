@@ -4,7 +4,7 @@ import CodeEditor from "../CodeEditor/Editor";
 import PreviewWindow from "../PreviewWindow/PreviewWindow";
 import ResizableCell from "../ResizableCell/ResizableCell";
 
-import { Paper, Button } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 import makeStyles from "./styles";
 
 const Cell: React.FC = () => {
@@ -22,10 +22,12 @@ const Cell: React.FC = () => {
   return (
     <ResizableCell direction="verticle">
       <Paper className={classes.wrapper} elevation={2}>
-        <CodeEditor
-          initialValue="/*Happy Coding! :) */"
-          onChange={(value) => setInput(value)}
-        />
+        <ResizableCell direction="horizontal">
+          <CodeEditor
+            initialValue="/*Happy Coding! :) */"
+            onChange={(value) => setInput(value)}
+          />
+        </ResizableCell>
         <PreviewWindow code={code} />
       </Paper>
     </ResizableCell>
