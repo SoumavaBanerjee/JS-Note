@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import * as esbuild from "esbuild-wasm";
 import Cell from "./components/CodeCell/Cell";
+import MarkdownEditor from "./components/MarkdownEditor/MarkdownEditor";
 
-import { Container } from "@material-ui/core";
 import makeStyles from "./styles";
 
 const App: React.FC = () => {
@@ -17,17 +17,19 @@ const App: React.FC = () => {
    */
 
   // Start es-build service once
-  const startService = async () => {
-    await esbuild.initialize({
-      wasmURL: "/esbuild.wasm",
-      worker: true,
-    });
-  };
-  useEffect(() => {
-    startService();
-  }, []);
 
-  return <Cell />;
+  /* I'm stopping this to isolate it during markdown. Turn it back on again */
+  // const startService = async () => {
+  //   await esbuild.initialize({
+  //     wasmURL: "/esbuild.wasm",
+  //     worker: true,
+  //   });
+  // };
+  // useEffect(() => {
+  //   startService();
+  // }, []);
+
+  return <MarkdownEditor />;
 };
 
 export default App;
