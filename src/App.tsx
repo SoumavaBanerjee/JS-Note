@@ -19,17 +19,22 @@ const App: React.FC = () => {
   // Start es-build service once
 
   /* I'm stopping this to isolate it during markdown. Turn it back on again */
-  // const startService = async () => {
-  //   await esbuild.initialize({
-  //     wasmURL: "/esbuild.wasm",
-  //     worker: true,
-  //   });
-  // };
-  // useEffect(() => {
-  //   startService();
-  // }, []);
+  const startService = async () => {
+    await esbuild.initialize({
+      wasmURL: "/esbuild.wasm",
+      worker: true,
+    });
+  };
+  useEffect(() => {
+    startService();
+  }, []);
 
-  return <MarkdownEditor />;
+  return (
+    <div className={classes.wrapper}>
+      <MarkdownEditor />
+      <Cell />
+    </div>
+  );
 };
 
 export default App;

@@ -10,6 +10,7 @@ import "./resizerReset.css";
 const MarkdownEditor: React.FC = () => {
   const classes = makeStyles();
   const [editing, setEditing] = useState(false);
+  const [textValue, setTextValue] = useState("# header");
   const markdownRef = useRef<HTMLDivElement | null>(null);
 
   // Toogle between view mode and editor mode
@@ -45,7 +46,10 @@ const MarkdownEditor: React.FC = () => {
         className={`${classes.PaperContainer} text-editor`}
         elevation={2}
       >
-        <MDEditor />
+        <MDEditor
+          value={textValue}
+          onChange={(updatedTextValue) => setTextValue(updatedTextValue || "")}
+        />
       </Paper>
     );
   }
@@ -56,7 +60,7 @@ const MarkdownEditor: React.FC = () => {
       className={`${classes.PaperContainer} text-editor`}
       elevation={2}
     >
-      <MDEditor.Markdown source={"# FOR NOW"} />
+      <MDEditor.Markdown source={textValue} />
     </Paper>
   );
 };
