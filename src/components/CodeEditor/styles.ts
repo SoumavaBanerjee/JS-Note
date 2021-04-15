@@ -9,6 +9,7 @@ export default makeStyles((theme) => ({
   },
   editorWrapper: {
     position: "relative",
+    overflow: "hidden",
     height: "100%",
     width: "100%",
   },
