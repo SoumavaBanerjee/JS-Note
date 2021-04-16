@@ -7,7 +7,3 @@ export const Store = createStore(
   {},
   compose(applyMiddleware(thunk))
 );
-
-// debugging
-const state = Store.getState();
-console.info(state);
