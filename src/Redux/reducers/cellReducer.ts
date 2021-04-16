@@ -21,34 +21,29 @@ const initialState: cellState = {
   data: {},
 };
 
-/** 
- * PS: data has been modeled like that (instead of an array) to prevent .find()/.filter() calls.
- * This simplefies accesing stuff.
- * 
- * 
- * state will look something like this:
- * 
-  const stateDummy = [
-  {
-    loading: false,
-    error: "",
-    order: ["id1", "id2", "id3", "id4"],
-    data: {
-      id1: {
-        id: "code1",
-        type: "code",
-        content: "const xyz = 231283",
-      },
-      id2: {
-        id: "text1",
-        type: "text",
-        content: "# Header '\n' -rest of the stuff ",
-      },
-    },
-  },
-];
- 
- */
+//  PS: data has been modeled like that (instead of an array) to prevent .find()/.filter() calls.
+//  This simplefies accesing stuff.
+
+//  state will look something like this:
+//   const stateDummy = [
+//   {
+//     loading: false,
+//     error: "",
+//     order: ["id1", "id2", "id3", "id4"],
+//     data: {
+//       id1: {
+//         id: "code1",
+//         type: "code",
+//         content: "const xyz = 231283",
+//       },
+//       id2: {
+//         id: "text1",
+//         type: "text",
+//         content: "# Header '\n' -rest of the stuff ",
+//       },
+//     },
+//   },
+// ];
 
 const reducer = produce((state: cellState = initialState, action: Action) => {
   switch (action.type) {
@@ -65,14 +60,13 @@ const reducer = produce((state: cellState = initialState, action: Action) => {
       // check for swapTargetIndex out of bounds
       if (swapTargetIndex < 0 || swapTargetIndex > state.order.length - 1) {
         console.error("swapTargetIndex is out of bounds");
-        return;
       }
 
       // Swap id orders
       state.order[idIndex] = state.order[swapTargetIndex];
       state.order[swapTargetIndex] = action.payload.id;
 
-      return state;
+      return;
 
     case ActionType.DELETE_CELL:
       // from both order and data
@@ -103,10 +97,10 @@ const reducer = produce((state: cellState = initialState, action: Action) => {
         state.order.splice(prevCellId, 0, newCell.id);
       }
 
-      return state;
+      return;
     default:
       return state;
   }
-});
+}, initialState);
 
 export default reducer;
