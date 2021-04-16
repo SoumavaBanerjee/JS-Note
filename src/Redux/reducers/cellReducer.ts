@@ -49,11 +49,31 @@ const reducer = produce((state: cellState = initialState, action: Action) => {
       const { content, id } = action.payload;
       state.data[id].content = content;
       return;
+
     case ActionType.MOVE_CELL:
+      const { direction } = action.payload;
+      const idIndex = state.order.findIndex((id) => id === action.payload.id);
+      const swapTargetIndex = direction === "up" ? idIndex - 1 : idIndex + 1;
+
+      // check for swapTargetIndex out of bounds
+      if (swapTargetIndex < 0 || swapTargetIndex > state.order.length - 1) {
+        console.error("swapTargetIndex is out of bounds");
+        return;
+      }
+
+      // Swap id orders
+      state.order[idIndex] = state.order[swapTargetIndex];
+      state.order[swapTargetIndex] = action.payload.id;
+
       return state;
 
     case ActionType.DELETE_CELL:
-      return state;
+      // from both order and data
+      delete state.data[action.payload];
+      const index = state.order.findIndex((id) => id === action.payload);
+      state.order.splice(index, 1);
+      return;
+
     case ActionType.INSERT_CELL_BEFORE:
       return state;
     default:
