@@ -1,7 +1,9 @@
+import { produce } from "immer";
+import { nanoid } from "nanoid";
+
 import { Action } from "../actions/index";
 import { CellInterface } from "../../interfaces/index";
 import { ActionType } from "../action-types";
-import { produce } from "immer";
 
 interface cellState {
   loading: boolean;
@@ -19,7 +21,12 @@ const initialState: cellState = {
   data: {},
 };
 
-/** state will look something like this:
+/** 
+ * PS: data has been modeled like that (instead of an array) to prevent .find()/.filter() calls.
+ * This simplefies accesing stuff.
+ * 
+ * 
+ * state will look something like this:
  * 
   const stateDummy = [
   {
@@ -75,6 +82,27 @@ const reducer = produce((state: cellState = initialState, action: Action) => {
       return;
 
     case ActionType.INSERT_CELL_BEFORE:
+      const { type } = action.payload;
+      const newCell: CellInterface = {
+        content: "",
+        type,
+        id: nanoid(),
+      };
+
+      // insert new cell in data
+      state.data[newCell.id] = newCell;
+
+      // get index of previous cell and insert newCell before it
+      const prevCellId = state.order.findIndex(
+        (id) => id === action.payload.id
+      );
+
+      if (prevCellId === -1) {
+        state.order.push(newCell.id);
+      } else {
+        state.order.splice(prevCellId, 0, newCell.id);
+      }
+
       return state;
     default:
       return state;
