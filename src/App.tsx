@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import * as esbuild from "esbuild-wasm";
-import Cell from "./components/CodeCell/Cell";
-import MarkdownEditor from "./components/MarkdownEditor/MarkdownEditor";
-
+import CellList from "./components/CellList/CellList";
 import makeStyles from "./styles";
+import { CssBaseline, ThemeProvider } from "@material-ui/core";
+import theme from "./theme";
 
 const App: React.FC = () => {
   const classes = makeStyles();
@@ -30,10 +30,12 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className={classes.wrapper}>
-      <MarkdownEditor />
-      <Cell />
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className={classes.wrapper}>
+        <CssBaseline />
+        <CellList />
+      </div>
+    </ThemeProvider>
   );
 };
 

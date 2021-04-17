@@ -6,3 +6,7 @@ export interface CellInterface {
   content: string;
   type: CellType;
 }
+
+export interface CellListItemInterface {
+  cell: CellInterface;
+}
