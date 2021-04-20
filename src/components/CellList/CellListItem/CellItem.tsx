@@ -8,9 +8,9 @@ const CellItem: React.FC<CellListItemInterface> = ({ cell }) => {
   let child: JSX.Element;
 
   if (cell.type === "code") {
-    child = <Cell />;
+    child = <Cell cell={cell} />;
   } else {
-    child = <Editor />;
+    child = <Editor cell={cell} />;
   }
 
   return <div>{child}</div>;

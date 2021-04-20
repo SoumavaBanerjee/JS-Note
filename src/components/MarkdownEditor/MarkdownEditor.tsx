@@ -2,15 +2,19 @@ import React, { useState, useEffect, useRef } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import { Paper } from "@material-ui/core";
 
+import { CellListItemInterface } from "../../interfaces";
+import { useAction } from "../../hooks/useActions";
+
 import makeStyles from "./styles";
 
 // re-style the drag handle;
 import "./resizerReset.css";
 
-const MarkdownEditor: React.FC = () => {
+const MarkdownEditor: React.FC<CellListItemInterface> = ({ cell }) => {
   const classes = makeStyles();
   const [editing, setEditing] = useState(false);
   const [textValue, setTextValue] = useState("# header");
+  const { updateCell } = useAction();
   const markdownRef = useRef<HTMLDivElement | null>(null);
 
   // Toogle between view mode and editor mode

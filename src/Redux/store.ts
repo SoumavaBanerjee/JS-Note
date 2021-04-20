@@ -9,7 +9,7 @@ import { ActionType } from "./action-types";
 export const Store = createStore(
   rootReducer,
   {},
-  compose(applyMiddleware(thunk))
+  composeWithDevTools(applyMiddleware(thunk))
 );
 
 console.log(Store.getState());
@@ -27,5 +27,13 @@ Store.dispatch({
   payload: {
     id: null,
     type: "code",
+  },
+});
+
+Store.dispatch({
+  type: ActionType.INSERT_CELL_BEFORE,
+  payload: {
+    id: null,
+    type: "text",
   },
 });
