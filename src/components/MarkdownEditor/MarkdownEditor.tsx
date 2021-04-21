@@ -13,7 +13,6 @@ import "./resizerReset.css";
 const MarkdownEditor: React.FC<CellListItemInterface> = ({ cell }) => {
   const classes = makeStyles();
   const [editing, setEditing] = useState(false);
-  const [textValue, setTextValue] = useState("# header");
   const { updateCell } = useAction();
   const markdownRef = useRef<HTMLDivElement | null>(null);
 
@@ -51,8 +50,10 @@ const MarkdownEditor: React.FC<CellListItemInterface> = ({ cell }) => {
         elevation={2}
       >
         <MDEditor
-          value={textValue}
-          onChange={(updatedTextValue) => setTextValue(updatedTextValue || "")}
+          value={cell.content}
+          onChange={(updatedTextValue) =>
+            updateCell(cell.id, updatedTextValue || "")
+          }
         />
       </Paper>
     );
@@ -64,7 +65,7 @@ const MarkdownEditor: React.FC<CellListItemInterface> = ({ cell }) => {
       className={`${classes.PaperContainer} text-editor`}
       elevation={2}
     >
-      <MDEditor.Markdown source={textValue} />
+      <MDEditor.Markdown source={cell.content || "## Write your docs here"} />
     </Paper>
   );
 };

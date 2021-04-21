@@ -60,6 +60,7 @@ const reducer = produce((state: cellState = initialState, action: Action) => {
       // check for swapTargetIndex out of bounds
       if (swapTargetIndex < 0 || swapTargetIndex > state.order.length - 1) {
         console.error("swapTargetIndex is out of bounds");
+        return state;
       }
 
       // Swap id orders
