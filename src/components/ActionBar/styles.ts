@@ -1,9 +1,11 @@
-import { darken, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
   actionBarWrapper: {
     display: "flex",
     justifyContent: "flex-end",
-    backgroundColor: darken(theme.palette.background.default, 0.2),
+    alignItems: "center",
+    backgroundColor: theme.palette.background.paper,
+    marginBottom: "-0.5rem",
   },
 }));

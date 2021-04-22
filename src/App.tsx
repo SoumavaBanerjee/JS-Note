@@ -5,9 +5,6 @@ import makeStyles from "./styles";
 import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import theme from "./theme";
 
-// testing
-import ActionBar from "./components/ActionBar/ActionBar";
-
 const App: React.FC = () => {
   const classes = makeStyles();
 
