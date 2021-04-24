@@ -5,3 +5,4 @@ export * from "./ResizableCell/ResizablePropsInterface";
 export * from "./Cell/CellInterface";
 export * from "./Cell/AddCellInterface";
 export * from "./ActionBar/ActionBarInterface";
+export * from "./Bundle/BundleInterface";
