@@ -3,4 +3,5 @@ export enum ActionType {
   DELETE_CELL = "delete_Cell",
   INSERT_CELL_AFTER = "insert_cell_after",
   UPDATE_CELL = "update_cell",
+  BUNDLE_CREATED = "bundle_created",
 }
