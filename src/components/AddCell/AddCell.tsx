@@ -5,7 +5,7 @@ import { useAction } from "../../hooks/useActions";
 
 import makeStyles from "./styles";
 
-import { Button, Divider } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
 const AddCell: React.FC<AddCellInterface> = ({ nextCellId }) => {
@@ -18,6 +18,9 @@ const AddCell: React.FC<AddCellInterface> = ({ nextCellId }) => {
       <div className={classes.buttonWrapper}>
         <Button
           className={classes.button}
+          onClick={() => {
+            insertCellBefore(nextCellId, "code");
+          }}
           variant="outlined"
           color="primary"
           size="medium"
@@ -26,6 +29,9 @@ const AddCell: React.FC<AddCellInterface> = ({ nextCellId }) => {
           Code
         </Button>
         <Button
+          onClick={() => {
+            insertCellBefore(nextCellId, "text");
+          }}
           className={classes.button}
           variant="outlined"
           color="primary"

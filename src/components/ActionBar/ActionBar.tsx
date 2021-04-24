@@ -17,6 +17,7 @@ const ActionBar: React.FC<ActionBarinterface> = ({ id }) => {
   return (
     <div className={classes.actionBarWrapper}>
       <Button
+        className={classes.actionButtons}
         onClick={() => {
           moveCell(id, "up");
         }}
@@ -27,6 +28,7 @@ const ActionBar: React.FC<ActionBarinterface> = ({ id }) => {
         <ArrowUpwardIcon color="primary" />
       </Button>
       <Button
+        className={classes.actionButtons}
         onClick={() => {
           moveCell(id, "down");
         }}
@@ -37,6 +39,7 @@ const ActionBar: React.FC<ActionBarinterface> = ({ id }) => {
         <ArrowDownwardIcon color="primary" />
       </Button>
       <Button
+        className={classes.actionButtons}
         onClick={() => {
           deleteCell(id);
         }}

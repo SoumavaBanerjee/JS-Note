@@ -8,6 +8,11 @@ export default makeStyles((theme) => ({
     alignItems: "center",
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
+    opacity: 0,
+    transition: "opacity 0.3s",
+    "&:hover": {
+      opacity: 1,
+    },
   },
 
   button: {
