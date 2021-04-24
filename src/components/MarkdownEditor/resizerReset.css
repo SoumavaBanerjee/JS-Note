@@ -1,0 +1,64 @@
+.w-md-editor-bar {
+  display: flex;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=")
+    no-repeat;
+  background-color: #424242;
+  background-position: 50%;
+  position: relative;
+  margin-top: -2px;
+  width: 100%;
+}
+
+.w-md-editor-bar svg {
+  display: none;
+}
+
+.w-md-editor .title {
+  line-height: unset;
+  font-size: unset;
+  font-weight: unset;
+  color: #d4d4d4 !important;
+}
+
+.text-editor em {
+  font-style: italic;
+}
+
+.text-editor .wmde-markdown hr {
+  border-top: 1px solid #dee5ed;
+}
+
+.text-editor .wmde-markdown ol {
+  list-style: decimal;
+}
+
+.text-editor .w-md-editor-show-live {
+  /* Hide menu bar buttons to prevent accidental delete */
+  z-index: 20;
+}
+
+.text-editor .w-md-editor-toolbar {
+  border-bottom: 1px solid gray;
+  background-color: hsl(0, 0%, 22%);
+}
+
+.text-editor .w-md-editor-toolbar li button {
+  color: #8db8d1;
+}
+
+.text-editor .w-md-editor-content {
+  background-color: #202123;
+}
+
+.text-editor .w-md-editor,
+.text-editor .w-md-editor .w-md-editor-text-pre {
+  color: #d4d4d4;
+}
+
+.text-editor .w-md-editor-text-pre .bold {
+  color: unset;
+}
+
+.text-editor .token.list.punctuation {
+  background-color: unset;
+}
