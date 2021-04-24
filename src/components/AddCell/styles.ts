@@ -8,7 +8,7 @@ export default makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
     opacity: 0,
-    transition: "opacity 0.3s",
+    transition: "opacity 0.2s ease-in 0.1s",
     "&:hover": {
       opacity: 1,
     },
