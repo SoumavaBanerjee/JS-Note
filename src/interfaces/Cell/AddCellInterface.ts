@@ -1,3 +1,3 @@
 export interface AddCellInterface {
-  nextCellId: string | null;
+  previousCellId: string | null;
 }

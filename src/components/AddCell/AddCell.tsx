@@ -8,8 +8,8 @@ import makeStyles from "./styles";
 import { Button } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
-const AddCell: React.FC<AddCellInterface> = ({ nextCellId }) => {
-  const { insertCellBefore } = useAction();
+const AddCell: React.FC<AddCellInterface> = ({ previousCellId }) => {
+  const { insertCellAfter } = useAction();
   const classes = makeStyles();
 
   return (
@@ -19,7 +19,7 @@ const AddCell: React.FC<AddCellInterface> = ({ nextCellId }) => {
         <Button
           className={classes.button}
           onClick={() => {
-            insertCellBefore(nextCellId, "code");
+            insertCellAfter(previousCellId, "code");
           }}
           variant="outlined"
           color="primary"
@@ -30,7 +30,7 @@ const AddCell: React.FC<AddCellInterface> = ({ nextCellId }) => {
         </Button>
         <Button
           onClick={() => {
-            insertCellBefore(nextCellId, "text");
+            insertCellAfter(previousCellId, "text");
           }}
           className={classes.button}
           variant="outlined"

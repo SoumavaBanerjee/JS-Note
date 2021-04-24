@@ -12,10 +12,8 @@ export const Store = createStore(
   composeWithDevTools(applyMiddleware(thunk))
 );
 
-console.log(Store.getState());
-
 Store.dispatch({
-  type: ActionType.INSERT_CELL_BEFORE,
+  type: ActionType.INSERT_CELL_AFTER,
   payload: {
     id: null,
     type: "text",
@@ -23,7 +21,7 @@ Store.dispatch({
 });
 
 Store.dispatch({
-  type: ActionType.INSERT_CELL_BEFORE,
+  type: ActionType.INSERT_CELL_AFTER,
   payload: {
     id: null,
     type: "code",
@@ -31,7 +29,7 @@ Store.dispatch({
 });
 
 Store.dispatch({
-  type: ActionType.INSERT_CELL_BEFORE,
+  type: ActionType.INSERT_CELL_AFTER,
   payload: {
     id: null,
     type: "text",

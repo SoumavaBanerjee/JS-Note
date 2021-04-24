@@ -32,12 +32,12 @@ const initialState: cellState = {
 //     order: ["id1", "id2", "id3", "id4"],
 //     data: {
 //       id1: {
-//         id: "code1",
+//         id: "Hs2UHJ_Vw",
 //         type: "code",
 //         content: "const xyz = 231283",
 //       },
 //       id2: {
-//         id: "text1",
+//         id: "DswZH_B_S",
 //         type: "text",
 //         content: "# Header '\n' -rest of the stuff ",
 //       },
@@ -50,7 +50,7 @@ const reducer = produce((state: cellState = initialState, action: Action) => {
     case ActionType.UPDATE_CELL:
       const { content, id } = action.payload;
       state.data[id].content = content;
-      return;
+      return state;
 
     case ActionType.MOVE_CELL:
       const { direction } = action.payload;
@@ -67,16 +67,16 @@ const reducer = produce((state: cellState = initialState, action: Action) => {
       state.order[idIndex] = state.order[swapTargetIndex];
       state.order[swapTargetIndex] = action.payload.id;
 
-      return;
+      return state;
 
     case ActionType.DELETE_CELL:
       // from both order and data
       delete state.data[action.payload];
       const index = state.order.findIndex((id) => id === action.payload);
       state.order.splice(index, 1);
-      return;
+      return state;
 
-    case ActionType.INSERT_CELL_BEFORE:
+    case ActionType.INSERT_CELL_AFTER:
       const { type } = action.payload;
       const newCell: CellInterface = {
         content: "",
@@ -87,18 +87,18 @@ const reducer = produce((state: cellState = initialState, action: Action) => {
       // insert new cell in data
       state.data[newCell.id] = newCell;
 
-      // get index of previous cell and insert newCell before it
-      const prevCellId = state.order.findIndex(
+      // get index of previous cell and insert newCell after it
+      const prevCellIndex = state.order.findIndex(
         (id) => id === action.payload.id
       );
 
-      if (prevCellId === -1) {
-        state.order.push(newCell.id);
+      if (prevCellIndex === -1) {
+        state.order.unshift(newCell.id);
       } else {
-        state.order.splice(prevCellId, 0, newCell.id);
+        state.order.splice(prevCellIndex + 1, 0, newCell.id);
       }
 
-      return;
+      return state;
     default:
       return state;
   }
