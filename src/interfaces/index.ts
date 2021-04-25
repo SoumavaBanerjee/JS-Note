@@ -6,3 +6,4 @@ export * from "./Cell/CellInterface";
 export * from "./Cell/AddCellInterface";
 export * from "./ActionBar/ActionBarInterface";
 export * from "./Bundle/BundleInterface";
+export type { Middleware } from "./Bundle/BundleMiddlewareInterface";
