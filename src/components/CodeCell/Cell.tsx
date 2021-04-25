@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
-import bundle from "../../Bundler/index";
+import React from "react";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+
 import CodeEditor from "../CodeEditor/Editor";
 import PreviewWindow from "../PreviewWindow/PreviewWindow";
 import ResizableCell from "../ResizableCell/ResizableCell";
@@ -12,24 +13,10 @@ import { CellListItemInterface } from "../../interfaces";
 import { useAction } from "../../hooks/useActions";
 
 const Cell: React.FC<CellListItemInterface> = ({ cell }) => {
-  const [code, setCode] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
   const classes = makeStyles();
+  const bundle = useTypedSelector((state) => state.bundle[cell.id]);
 
   const { updateCell } = useAction();
-
-  // Debouncing code execution upon delay of 1.5s
-  useEffect(() => {
-    const timer = setTimeout(async () => {
-      const bundledCode = await bundle(cell.content);
-      setCode(bundledCode.code);
-      setErrorMessage(bundledCode.error);
-    }, 1500);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [cell.content]);
 
   return (
     <ResizableCell direction="verticle">
@@ -38,7 +25,7 @@ const Cell: React.FC<CellListItemInterface> = ({ cell }) => {
           initialValue={cell.content}
           onChange={(value) => updateCell(cell.id, value)}
         />
-        <PreviewWindow errorMessage={errorMessage} code={code} />
+        <PreviewWindow errorMessage={bundle.error} code={bundle.code} />
       </Paper>
     </ResizableCell>
   );
