@@ -1,11 +1,33 @@
 import type { Middleware } from "../../interfaces";
+import { ActionType } from "../action-types";
+import bundle from "../../Bundler";
 
 let timer: any;
-export const bundleMiddleware: Middleware = (store) => (next) => (action) => {
+export const bundleMiddleware: Middleware = ({ getState, dispatch }) => (
+  next
+) => (action) => {
   next(action);
 
+  if (action.type !== ActionType.UPDATE_CELL) return;
+
+  //   check for text cell-type
+  const {
+    cell: { data: cellData },
+  } = getState();
+  const cell = cellData[action.payload.id];
+
+  if (cell.type === "text") return;
+
   clearTimeout(timer);
-  timer = setTimeout(() => {
-    console.log("every 1000 miliseconds in Africa, a second passes");
+  timer = setTimeout(async () => {
+    console.log("initiating bundling");
+    const result = await bundle(action.payload.content);
+
+    dispatch({
+      type: ActionType.BUNDLE_CREATED,
+      payload: result,
+    });
+
+    console.log("bundling finished", "action dispatched");
   }, 1000);
 };
