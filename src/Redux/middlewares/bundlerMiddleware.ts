@@ -25,7 +25,10 @@ export const bundleMiddleware: Middleware = ({ getState, dispatch }) => (
 
     dispatch({
       type: ActionType.BUNDLE_CREATED,
-      payload: result,
+      payload: {
+        cellId: action.payload.id,
+        bundle: result,
+      },
     });
 
     console.log("bundling finished", "action dispatched");
