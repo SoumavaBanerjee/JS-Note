@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 
 import CodeEditor from "../CodeEditor/Editor";
@@ -25,7 +25,13 @@ const Cell: React.FC<CellListItemInterface> = ({ cell }) => {
           initialValue={cell.content}
           onChange={(value) => updateCell(cell.id, value)}
         />
-        <PreviewWindow errorMessage={bundle.error} code={bundle.code} />
+        <Fragment>
+          {!bundle ? (
+            <PreviewWindow errorMessage="" code="" />
+          ) : (
+            <PreviewWindow errorMessage={bundle.error} code={bundle.code} />
+          )}
+        </Fragment>
       </Paper>
     </ResizableCell>
   );
