@@ -8,6 +8,11 @@ export default makeStyles((theme) => ({
     flexDirection: "column",
     padding: theme.spacing(3),
     margin: theme.spacing(3),
+    "&:hover": {
+      ".MuiPaper-elevation2": `box-shadow: 0px 3px 1px -2px #42A5F5,
+         0px 2px 2px 0px #42A5F5,
+         0px 1px 5px 0px #42A5F5`,
+    },
   },
   CardHeader: {
     marginBottom: theme.spacing(3),
