@@ -1,12 +1,12 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
-  heroWrapper: {
+  navWrapper: {
     display: "flex",
-    flexDirection: "column",
-    height: "200vh",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
-  textHighlight: {
-    color: theme.palette.primary.light,
+  demoButton: {
+    marginRight: theme.spacing(2),
   },
 }));

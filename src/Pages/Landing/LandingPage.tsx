@@ -1,33 +1,36 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import {
-  AppBar,
   ThemeProvider,
   CssBaseline,
   Grid,
   Button,
-  Toolbar,
-  IconButton,
   Typography,
+  Container,
+  Box,
 } from "@material-ui/core";
 
+import {
+  Navbar,
+  HeroSection,
+  Feature,
+} from "../../components/LandingComponents";
 import theme from "../../theme";
+import makeStyles from "./styles";
 
-const LandingPage = () => {
+const LandingPage: React.FC = () => {
+  const classes = makeStyles();
+  let history = useHistory();
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar color="transparent" position="static">
-        <Toolbar>
-          <Typography variant="h6">News</Typography>
-          <Button color="primary" variant="outlined">
-            <Link to="/demo">
-              <Typography variant="button">Demo</Typography>{" "}
-            </Link>
-          </Button>
-        </Toolbar>
-      </AppBar>
+      <Navbar />
+      <Container maxWidth="lg" className={classes.heroWrapper}>
+        <HeroSection />
+        <Feature />
+      </Container>
     </ThemeProvider>
   );
 };
