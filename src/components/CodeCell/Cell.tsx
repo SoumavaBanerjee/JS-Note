@@ -25,7 +25,11 @@ const Cell: React.FC<CellListItemInterface> = ({ cell }) => {
           initialValue={cell.content}
           onChange={(value) => updateCell(cell.id, value)}
         />
-        <PreviewWindow errorMessage={bundle.error} code={bundle.code} />
+        {!bundle ? (
+          <PreviewWindow errorMessage="" code="" />
+        ) : (
+          <PreviewWindow errorMessage={bundle.error} code={bundle.code} />
+        )}
       </Paper>
     </ResizableCell>
   );
