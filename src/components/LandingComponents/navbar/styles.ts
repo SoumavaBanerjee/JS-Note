@@ -9,4 +9,8 @@ export default makeStyles((theme) => ({
   demoButton: {
     marginRight: theme.spacing(2),
   },
+  navButtonWrapper: {
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+  },
 }));

@@ -5,12 +5,13 @@ export default makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   heroText: {
-    height: "60vh",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
     marginTop: theme.spacing(3),
     padding: theme.spacing(3),
   },
   heroImage: {
-    height: "60vh",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",

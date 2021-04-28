@@ -1,6 +1,13 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { AppBar, Button, Toolbar, Typography } from "@material-ui/core";
+import {
+  AppBar,
+  Button,
+  IconButton,
+  Toolbar,
+  Typography,
+} from "@material-ui/core";
+import GitHubIcon from "@material-ui/icons/GitHub";
 
 import makeStyles from "./styles";
 
@@ -11,17 +18,32 @@ export const Navbar: React.FC = () => {
   return (
     <AppBar color="transparent" position="static">
       <Toolbar className={classes.navWrapper}>
-        <Typography variant="h4">JS-NOTE</Typography>
-        <Button
-          className={classes.demoButton}
-          onClick={() => {
-            history.push("/demo");
-          }}
-          color="primary"
-          variant="outlined"
-        >
-          <Typography variant="button">Demo</Typography>
-        </Button>
+        <Typography component="div" variant="h4">
+          JS-NOTE
+        </Typography>
+        <div className={classes.navButtonWrapper}>
+          <Button
+            className={classes.demoButton}
+            onClick={() => {
+              history.push("/demo");
+            }}
+            color="primary"
+            variant="outlined"
+            size="large"
+          >
+            <Typography variant="button">Demo</Typography>
+          </Button>
+          <a
+            target="_blank"
+            rel="noreferrer"
+            style={{ textDecoration: "none" }}
+            href="https://github.com/SoumavaBanerjee/JS-transpiler"
+          >
+            <IconButton color="primary">
+              <GitHubIcon />
+            </IconButton>
+          </a>
+        </div>
       </Toolbar>
     </AppBar>
   );

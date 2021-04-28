@@ -15,6 +15,7 @@ import {
   Navbar,
   HeroSection,
   Feature,
+  Footer,
 } from "../../components/LandingComponents";
 import theme from "../../theme";
 import makeStyles from "./styles";
@@ -30,6 +31,7 @@ const LandingPage: React.FC = () => {
       <Container maxWidth="lg" className={classes.heroWrapper}>
         <HeroSection />
         <Feature />
+        <Footer />
       </Container>
     </ThemeProvider>
   );

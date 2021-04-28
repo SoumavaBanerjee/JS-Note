@@ -1,11 +1,12 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
-  heroWrapper: {
+  FooterWrapper: {
     display: "flex",
-    justifyContent: "space-between",
-    flexDirection: "column",
-    height: "200vh",
+    justifyContent: "center",
+    alignItems: "Center",
+    marginLeft: theme.spacing(2),
+    padding: theme.spacing(3),
   },
   textHighlight: {
     color: theme.palette.primary.light,

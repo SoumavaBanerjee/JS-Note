@@ -6,7 +6,6 @@ export default makeStyles((theme) => ({
     flexDirection: "column",
     marginTop: theme.spacing(3),
     padding: theme.spacing(2),
-    height: "50vh",
   },
   featureHeadingWrapepr: {
     display: "flex",
